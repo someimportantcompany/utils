@@ -1,0 +1,51 @@
+{
+  "name": "@someimportantcompany/utils",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "nyc mocha",
+    "test:mocha": "mocha"
+  },
+  "repository": "https://github.com/someimportantcompany/utils.git",
+  "author": "jdrydn <james@jdrydn.com> (https://jdrydn.com)",
+  "license": "MIT",
+  "bugs": "https://github.com/someimportantcompany/utils/issues",
+  "homepage": "https://github.com/someimportantcompany/utils",
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
+  "mocha": {
+    "exit": true,
+    "recursive": true,
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": "spec",
+    "ignore": [
+      "**/node_modules"
+    ],
+    "spec": [
+      "./{,!(node_modules)/**}/*.test.{,+(js|ts)}"
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "*.test.js",
+      "**/*.test.js",
+      "*.test.ts",
+      "**/*.test.ts",
+      "test/"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  }
+}
