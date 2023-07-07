@@ -2,6 +2,12 @@ const crypto = require('crypto');
 
 function assert(value, err, opts = undefined) {
   if (!value) {
+    if (typeof err === 'string') {
+      err = new Error(err);
+      if (typeof Error.captureStackTrace === 'function') {
+        Error.captureStackTrace(err, assert);
+      }
+    }
     Object.assign(err, opts || {});
     throw err;
   }
