@@ -1,7 +1,7 @@
 {
   "name": "@someimportantcompany/utils",
   "description": "A collection of handy utility functions for you & your projects.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "scripts": {
     "test": "nyc mocha",
     "test:mocha": "mocha"
