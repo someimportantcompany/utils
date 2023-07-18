@@ -109,6 +109,37 @@ describe('@someimportantcompany/utils', () => {
     });
   });
 
+  describe('#createHashMd5', () => {
+    it('should hash a string', async () => {
+      const result = utils.createHashMd5('The Grid. A digital frontier.');
+      assert.strictEqual(result, 'f1692f68b3c08a7d37be7eed8f7aff42');
+    });
+    it('should hash a buffer', async () => {
+      const result = utils.createHashMd5(Buffer.from('It\'s amazing how productive doing nothing can be.', 'utf8'));
+      assert.strictEqual(result, '5437e4c967b6353a44450a5889a4e061');
+    });
+  });
+  describe('#createHashSha1', () => {
+    it('should hash a string', async () => {
+      const result = utils.createHashSha1('Flynn is teaching me about the art of the selfless.');
+      assert.strictEqual(result, '355b4fe513bca423a4b3471cd0f8eff90b8529b0');
+    });
+    it('should hash a buffer', async () => {
+      const result = utils.createHashSha1(Buffer.from('The only way to win the game is not to play.', 'utf8'));
+      assert.strictEqual(result, 'a8515a30e8869d28ca309f31cb8f83d69d7023a1');
+    });
+  });
+  describe('#createHashSha256', () => {
+    it('should hash a string', async () => {
+      const result = utils.createHashSha256('Your old man\'s about to knock on the sky and listen to the sound.');
+      assert.strictEqual(result, '19e3df8b7f725efcc413cabb0de25d9311e751b603016754313678cf400a50a8');
+    });
+    it('should hash a buffer', async () => {
+      const result = utils.createHashSha256(Buffer.from('End of line, man', 'utf8'));
+      assert.strictEqual(result, 'd6ad67774024d5c6d0ec089b0e24d1ed010fb58ee3c5e6be0ff1a3ee804b083d');
+    });
+  });
+
   describe('#attempt', () => {
     it('should return a function value', async () => {
       const result = utils.attempt(() => true);

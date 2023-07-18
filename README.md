@@ -1,5 +1,10 @@
 # @someimportantcompany/utils
 
+[![NPM](https://badge.fury.io/js/@someimportantcompany%2Futils.svg)](https://npm.im/@someimportantcompany/utils)
+[![Test](https://github.com/someimportantcompany/utils/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/someimportantcompany/utils/actions/workflows/test.yml)
+[![Typescript](https://img.shields.io/badge/TS-TypeScript-%230074c1.svg)](https://www.typescriptlang.org)
+<!-- [![Coverage](https://coveralls.io/repos/github/someimportantcompany/utils/badge.svg)](https://coveralls.io/github/someimportantcompany/utils) -->
+
 A collection of handy utility functions for you & your projects.
 
 ## Install
@@ -185,6 +190,54 @@ const results = await promiseAllSettled(urls.map(async url => {
 // The first two URLs will throw an error, but the final one will fetch successfully
 // But then the PromiseSettledManyErrors error will be thrown cleanly
 // With both errors under `err.inner`
+```
+
+### `createHashMd5`
+
+Hash a string or Buffer with MD5.
+
+```ts
+export function createHashMd5(input: string | Buffer): string
+```
+```js
+import { createHashMd5 } from '@someimportantcompany/utils';
+
+const value = createHashMd5('hello world');
+// value === '6f5902ac237024bdd0c176cb93063dc4'
+const value = createHashMd5(Buffer.from('hello world', 'utf8'));
+// value === '6f5902ac237024bdd0c176cb93063dc4'
+```
+
+### `createHashSha1`
+
+Hash a string or Buffer with Sha1.
+
+```ts
+export function createHashSha1(input: string | Buffer): string
+```
+```js
+import { createHashSha1 } from '@someimportantcompany/utils';
+
+const value = createHashSha1('hello world');
+// value === '2aae6c35c94fcfb415dbe95f408b9ce91ee846ed'
+const value = createHashSha1(Buffer.from('hello world', 'utf8'));
+// value === '2aae6c35c94fcfb415dbe95f408b9ce91ee846ed'
+```
+
+### `createHashSha256`
+
+Hash a string or Buffer with Sha256.
+
+```ts
+export function createHashSha256(input: string | Buffer): string
+```
+```js
+import { createHashSha256 } from '@someimportantcompany/utils';
+
+const value = createHashSha256('hello world');
+// value === 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'
+const value = createHashSha256(Buffer.from('hello world', 'utf8'));
+// value === 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'
 ```
 
 ### `attempt`

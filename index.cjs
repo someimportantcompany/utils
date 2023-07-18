@@ -67,6 +67,16 @@ async function promiseAllSettled(array) {
   return values;
 }
 
+function createHashMd5(input) {
+  return crypto.createHash('md5').update(input).digest('hex');
+}
+function createHashSha1(input) {
+  return crypto.createHash('sha1').update(input).digest('hex');
+}
+function createHashSha256(input) {
+  return crypto.createHash('sha256').update(input).digest('hex');
+}
+
 function attempt(fn, retries = 1) {
   assert(typeof fn === 'function', new TypeError('Expected first argument to be a function'));
   assert(typeof retries === 'number', new TypeError('Expected second argument to be a number'));
@@ -95,49 +105,6 @@ function attempt(fn, retries = 1) {
     }
   }
 }
-
-// function aesEncrypt(key, plain, transform = undefined) {
-//   assert(typeof key === 'string', new TypeError('Expected key to be a string'));
-//   assert(typeof plain === 'string' && plain.length,
-//     new TypeError('Expected input to be a non-empty string'));
-//   assert(transform === undefined || typeof transform === 'function',
-//     new TypeError('Expected transform to be a function'));
-
-//   // let buffer = plain;
-//   // if (typeof transform === 'function') {
-//   //   buffer = transform(buffer);
-//   // }
-
-//   const buffer = Buffer.from(plain, 'utf8');
-
-//   const iv = crypto.randomBytes(16);
-//   const sha256 = crypto.createHash('sha256').update(key);
-//   const cipher = crypto.createCipheriv('aes-256-ctr', sha256.digest(), iv);
-
-//   const ciphertext = cipher.update(buffer);
-//   const encrypted = Buffer.concat([iv, ciphertext, cipher.final()]);
-//   return encrypted.toString('hex');
-// }
-
-// function aesDecrypt(key, encrypted, transform = undefined) {
-//   assert(typeof key === 'string', new TypeError('Expected key to be a string'));
-//   assert(typeof encrypted === 'string' && encrypted.length,
-//     new TypeError('Expected input to be a non-empty string'));
-//   assert(transform === undefined || typeof transform === 'function',
-//     new TypeError('Expected transform to be a function'));
-
-//   // let buffer = encrypted;
-//   assert(encrypted.length >= 17, new TypeError('Provided input must decrypt to a non-empty string'));
-//   const buffer = Buffer.from(encrypted, 'hex');
-
-//   const iv = Uint8Array.prototype.slice.call(buffer, 0, 16);
-//   const sha256 = crypto.createHash('sha256').update(key);
-//   const decipher = crypto.createDecipheriv('aes-256-ctr', sha256.digest(), iv);
-//   const ciphertext = Uint8Array.prototype.slice.call(buffer, 16);
-
-//   const plain = decipher.update(ciphertext) + decipher.final();
-//   return typeof transform === 'function' ? transform(plain) : plain;
-// }
 
 function aesEncrypt(key, plain, transform = undefined) {
   assert(typeof key === 'string', new TypeError('Expected key to be a string'));
@@ -261,6 +228,9 @@ module.exports = {
   promiseReduceSeries,
   promiseAllSettled,
   PromiseSettledManyErrors,
+  createHashMd5,
+  createHashSha1,
+  createHashSha256,
   attempt,
   aesEncrypt,
   aesDecrypt,

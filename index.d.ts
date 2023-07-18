@@ -35,6 +35,19 @@ export class PromiseSettledManyErrors extends Error {
 }
 
 /**
+ * Create an MD5-hash of the input
+ */
+export function createHashMd5(input: string | Buffer): string;
+/**
+ * Create an SHA1-hash of the input
+ */
+export function createHashSha1(input: string | Buffer): string;
+/**
+ * Create an SHA256-hash of the input
+ */
+export function createHashSha256(input: string | Buffer): string;
+
+/**
  * Attempt to execute a function, returning `null` if it throws.
  * Optionally retry a fixed number of times.
  */
