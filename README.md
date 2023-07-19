@@ -270,6 +270,22 @@ const value = attempt(() => {
 
 - If you pass an `async` function or a function that returns a Promise, you'll need to `await attempt(...)`. Otherwise, you can freely drop the extra `await`.
 
+### `wait`
+
+Using a Promise, wait a specific amount of milliseconds.
+
+```ts
+export function wait(timeout: number): Promise<void>;
+```
+```js
+import { wait } from '@someimportantcompany/utils';
+await wait(1000); // 1s
+
+// Pairs really well with ms
+import ms from 'ms';
+await wait(ms('5s'));
+```
+
 ### `aesEncrypt`/`aesDecrypt`
 
 Encrypt/decrypt a string/Buffer using `aes-256-ctr`. Optionally transform the data before encrypting/decrypting.

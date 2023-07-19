@@ -172,6 +172,24 @@ describe('@someimportantcompany/utils', () => {
     });
   });
 
+  describe('#wait', () => {
+    it('should wait for 100ms', async () => {
+      await utils.wait(100);
+    });
+
+    it('should wait for 500ms', async () => {
+      await utils.wait(500);
+    });
+
+    it('should wait for 1000ms', async () => {
+      await utils.wait(1000);
+    });
+
+    it('should wait for 1500ms', async () => {
+      await utils.wait(1500);
+    });
+  });
+
   describe('#aesEncrypt/#aesDecrypt', () => {
     const key = crypto.randomBytes(8).toString('hex');
 

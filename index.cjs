@@ -106,6 +106,10 @@ function attempt(fn, retries = 1) {
   }
 }
 
+function wait(timeout) {
+  return new Promise(resolve => setTimeout(() => resolve(), timeout));
+}
+
 function aesEncrypt(key, plain, transform = undefined) {
   assert(typeof key === 'string', new TypeError('Expected key to be a string'));
   assert(transform === undefined || typeof transform === 'function',
@@ -232,6 +236,7 @@ module.exports = {
   createHashSha1,
   createHashSha256,
   attempt,
+  wait,
   aesEncrypt,
   aesDecrypt,
   createAwsCloudwatchLogGroupUrl,

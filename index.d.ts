@@ -55,6 +55,11 @@ export function attempt<T>(fn: () => T, retries?: number): T | null;
 export function attempt<T>(fn: () => Promise<T>, retries?: number): Promise<T> | null;
 
 /**
+ * Wait for a fixed amount of milliseconds.
+ */
+export function wait(timeout: number): Promise<void>
+
+/**
  * Encrypt a string/Buffer using `aes-256-ctr`.
  * Optionally transform the data before encrypting.
  */
