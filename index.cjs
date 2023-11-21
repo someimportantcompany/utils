@@ -188,17 +188,11 @@ function createAwsCloudwatchLogGroupUrl(params) {
     new TypeError('Expected streamName to be a string'));
 
   const region = params.region || process.env.AWS_REGION || 'us-east-1';
-  const baseUrl = params.baseUrl || `https://${region}.console.aws.amazon.com/cloudwatch/home?region=${region}`;
+  const baseUrl = params.baseUrl || `https://console.aws.amazon.com/cloudwatch/home?region=${region}`;
 
-  function encodeStr(str) {
-    return encodeURIComponent(str)
-      .replace(/\%/g, '$25').replace(/\&/g, '$26')
-      .replace(/\=/g, '$3D').replace(/\?/g, '$3F');
-  }
-
-  let hashString = `logsV2:log-groups/log-group/${encodeStr(params.groupName)}/log-events`;
+  let hashString = `logsV2:log-groups/log-group/${encodeURIComponent(params.groupName)}/log-events`;
   if (params.streamName && typeof params.streamName === 'string') {
-    hashString += `/${encodeStr(params.streamName)}`;
+    hashString += `/${encodeURIComponent(params.streamName)}`;
   }
 
   const hashQuery = [];
@@ -206,20 +200,20 @@ function createAwsCloudwatchLogGroupUrl(params) {
   if (Array.isArray(params.between) && params.between.length === 2) {
     const [before, after] = params.between;
     assert(before instanceof Date && after instanceof Date, new TypeError('Expected before & after to be Dates'));
-    hashQuery.push(['start', before.getTime().toString()]);
-    hashQuery.push(['end', after.getTime().toString()]);
+    hashQuery.push(`start=${before.getTime().toString()}`);
+    hashQuery.push(`end=${after.getTime().toString()}`);
   } else if (typeof params.around === 'number') {
     const now = Date.now();
-    hashQuery.push(['start', (now - params.around).toString()]);
-    hashQuery.push(['end', (now + params.around).toString()]);
+    hashQuery.push(`start=${(now - params.around).toString()}`);
+    hashQuery.push(`end=${(now + params.around).toString()}`);
   }
 
   if (typeof params.filterPattern === 'string') {
-    hashQuery.push(['filterPattern', encodeURIComponent(params.filterPattern)]);
+    hashQuery.push(`filterPattern=${encodeURIComponent(params.filterPattern)}`);
   }
 
   if (hashQuery.length) {
-    hashString += `$3F${encodeStr(hashQuery.map(s => s.join('=')).join('&'))}`;
+    hashString += `?${hashQuery.join('&')}`;
   }
 
   return `${baseUrl}#${hashString}`;

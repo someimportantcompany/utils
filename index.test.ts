@@ -244,8 +244,8 @@ describe('@someimportantcompany/utils', () => {
         groupName: '/aws/lambda/some-example-function',
       });
       assert.strictEqual(result, (a => a.join(''))([
-        'https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1',
-        '#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsome-example-function/log-events',
+        'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1',
+        '#logsV2:log-groups/log-group/%2Faws%2Flambda%2Fsome-example-function/log-events',
       ]));
     });
 
@@ -255,8 +255,8 @@ describe('@someimportantcompany/utils', () => {
         region: 'eu-west-2',
       });
       assert.strictEqual(result, (a => a.join(''))([
-        'https://eu-west-2.console.aws.amazon.com/cloudwatch/home?region=eu-west-2',
-        '#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsome-example-function/log-events',
+        'https://console.aws.amazon.com/cloudwatch/home?region=eu-west-2',
+        '#logsV2:log-groups/log-group/%2Faws%2Flambda%2Fsome-example-function/log-events',
       ]));
     });
 
@@ -271,8 +271,8 @@ describe('@someimportantcompany/utils', () => {
       });
       assert.strictEqual(result, (a => a.join(''))([
         'https://cloudwatch.aws.amazon.com/logs',
-        '#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsome-example-function/log-events',
-        `/$255B$2524LATEST$255D${streamId}$3FfilterPattern$253D$252522${requestId}$252522`,
+        '#logsV2:log-groups/log-group/%2Faws%2Flambda%2Fsome-example-function/log-events',
+        `/%5B%24LATEST%5D${streamId}?filterPattern=%22${requestId}%22`,
       ]));
     });
 
@@ -282,9 +282,9 @@ describe('@someimportantcompany/utils', () => {
         between: [new Date('2023-06-23'), new Date('2023-06-30')]
       });
       assert.strictEqual(result, (a => a.join(''))([
-        'https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1',
-        '#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsome-example-function/log-events',
-        '$3Fstart$253D1687478400000$2526end$253D1688083200000',
+        'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1',
+        '#logsV2:log-groups/log-group/%2Faws%2Flambda%2Fsome-example-function/log-events',
+        '?start=1687478400000&end=1688083200000',
       ]));
     });
 
@@ -296,9 +296,9 @@ describe('@someimportantcompany/utils', () => {
 
       const now = Date.now();
       assert.strictEqual(result, (a => a.join(''))([
-        'https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1',
-        '#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsome-example-function/log-events',
-        `$3Fstart$253D${now - 1000}$2526end$253D${now + 1000}`,
+        'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1',
+        '#logsV2:log-groups/log-group/%2Faws%2Flambda%2Fsome-example-function/log-events',
+        `?start=${now - 1000}&end=${now + 1000}`,
       ]));
     });
   });
