@@ -270,6 +270,52 @@ const value = attempt(() => {
 
 - If you pass an `async` function or a function that returns a Promise, you'll need to `await attempt(...)`. Otherwise, you can freely drop the extra `await`.
 
+### `tryCatch`
+
+Attempt to execute a function, and should it throw transform the error before returning. By default, if an error throws then `null` is returned.
+
+```ts
+export function tryCatch<T>(
+  tryFn: () => T,
+): T | null;
+export function tryCatch<T>(
+  tryFn: () => Promise<T>,
+): Promise<T | null>;
+export function tryCatch<T>(
+  tryFn: () => T,
+  catchFn?: (err: any) => U,
+): T | U;
+export function tryCatch<T, U>(
+  tryFn: () => Promise<T>,
+  catchFn?: (err: any) => U,
+): Promise<T | U>;
+```
+```js
+import { assert, tryCatch } from '@someimportantcompany/utils';
+
+const value = tryCatch(() => 1 + 1);
+// value === 2
+
+const value = tryCatch(() => {
+  assert(Math.random() > 0.5, new Error('Errors half the time (ish)'));
+  return 5;
+}, err => {
+  err.title = 'An error occurred';
+  throw err;
+});
+// value === 5 or throws
+
+const value = tryCatch(() => {
+  assert(Math.random() > 0.5, new Error('Errors half the time (ish)'));
+  return 5;
+}, err => {
+  return 0;
+});
+// value === 5 or value === 0
+```
+
+- If you pass an `async` function or a function that returns a Promise, you'll need to `await tryCatch(...)`. Otherwise, you can freely drop the extra `await`.
+
 ### `wait`
 
 Using a Promise, wait a specific amount of milliseconds.
@@ -390,7 +436,7 @@ export function createAwsCloudwatchLogGroupUrl(params: {
 const url = createAwsCloudwatchLogGroupUrl({
   groupName: '/ecs/my-service',
 });
-// https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
+// https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
 // /log-group/$252Fecs$252Fmy-service/log-events
 
 const url = createAwsCloudwatchLogGroupUrl({
@@ -398,7 +444,7 @@ const url = createAwsCloudwatchLogGroupUrl({
   streamName: 'SOME-IDENTIFIER',
   around: 500,
 });
-// 'https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
+// 'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
 // /log-group/$252Fecs$252Fmy-service/log-events/SOME-IDENTIFIER
 // $3Fstart$253D1688739366071$2526end$253D1688739367071
 
@@ -407,7 +453,7 @@ const url = createAwsCloudwatchLogGroupUrl({
   streamName: 'SOME-IDENTIFIER',
   filterPattern: '"REQUEST-ID"',
 });
-// https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
+// https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups
 // /log-group/$252Fecs$252Fmy-service/log-events/SOME-IDENTIFIER
 // $3FfilterPattern$253D$252522REQUEST-ID$252522
 ```
