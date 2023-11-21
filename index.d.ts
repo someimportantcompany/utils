@@ -55,6 +55,20 @@ export function attempt<T>(fn: () => T, retries?: number): T | null;
 export function attempt<T>(fn: () => Promise<T>, retries?: number): Promise<T> | null;
 
 /**
+ * Attempt to execute a function, returning `null` if it throws.
+ */
+export function tryCatch<T>(tryFn: () => T): T | null;
+export function tryCatch<T>(tryFn: () => Promise<T>): Promise<T | null>;
+
+/**
+ * Attempt to execute a function, transforming the caught `err` if it throws.
+ */
+export function tryCatch<T>(tryFn: () => T, catchFn: (err) => T): T;
+export function tryCatch<T>(tryFn: () => Promise<T>, catchFn: (err) => T): Promise<T>;
+export function tryCatch<T, U>(tryFn: () => T, catchFn: (err) => U): T | U;
+export function tryCatch<T, U>(tryFn: () => Promise<T>, catchFn: (err) => U): Promise<T | U>;
+
+/**
  * Wait for a fixed amount of milliseconds.
  */
 export function wait(timeout: number): Promise<void>

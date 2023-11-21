@@ -77,6 +77,25 @@ function createHashSha256(input) {
   return crypto.createHash('sha256').update(input).digest('hex');
 }
 
+function tryCatch(tryFn, catchFn = () => null) {
+  assert(typeof tryFn === 'function', new TypeError('Expected first argument to be a function'));
+  assert(typeof catchFn === 'function', new TypeError('Expected second argument to be a function'));
+
+  try {
+    const r = tryFn();
+    // If the function return a Promise-like result
+    if (r && typeof r.then === 'function' && typeof r.catch === 'function') {
+      // Then wrap the promise to protect against errors
+      return r.catch(catchFn);
+    } else {
+      // Otherwise, return the raw value returned from the function
+      return r;
+    }
+  } catch (err) {
+    return catchFn(err);
+  }
+}
+
 function attempt(fn, retries = 1) {
   assert(typeof fn === 'function', new TypeError('Expected first argument to be a function'));
   assert(typeof retries === 'number', new TypeError('Expected second argument to be a number'));
@@ -230,6 +249,7 @@ module.exports = {
   createHashSha1,
   createHashSha256,
   attempt,
+  tryCatch,
   wait,
   aesEncrypt,
   aesDecrypt,

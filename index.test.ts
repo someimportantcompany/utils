@@ -172,6 +172,38 @@ describe('@someimportantcompany/utils', () => {
     });
   });
 
+  describe('#tryCatch', () => {
+    it('should return a function value', async () => {
+      const result = utils.tryCatch(() => true);
+      assert.strictEqual(result, true);
+    });
+
+    it('should return null if the function throws', async () => {
+      const result = utils.tryCatch(() => assert.fail('Oh no!'));
+      assert.strictEqual(result, null);
+    });
+
+    it('should return false if the function transforms the err', async () => {
+      const result = utils.tryCatch(() => assert.fail('Oh no!'), () => false);
+      assert.strictEqual(result, false);
+    });
+
+    it('should return a function promise', async () => {
+      const result = await utils.tryCatch(() => Promise.resolve(true));
+      assert.strictEqual(result, true);
+    });
+
+    it('should return null if the function promise throws', async () => {
+      const result = await utils.tryCatch(() => Promise.reject(new Error('Oh no')));
+      assert.strictEqual(result, null);
+    });
+
+    it('should return false if the function promise transforms the err', async () => {
+      const result = await utils.tryCatch(() => Promise.reject(new Error('Oh no')), () => false);
+      assert.strictEqual(result, false);
+    });
+  });
+
   describe('#wait', () => {
     it('should wait for 100ms', async () => {
       await utils.wait(100);
