@@ -6,6 +6,8 @@ import * as utils from './';
 describe('@someimportantcompany/utils', () => {
 
   describe('#assert', () => {
+    before(() => assert(typeof utils.assert === 'function', 'Expected assert to be a function'));
+
     function wrap(fn: () => void): Error | unknown {
       try {
         return fn();
@@ -34,6 +36,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#promiseEachSeries', () => {
+    before(() => assert(typeof utils.promiseEachSeries === 'function', 'Expected promiseEachSeries to be a function'));
+
     it('should iterate through an array', async () => {
       const results: number[] = [];
       const items = [ 1, 2, 3, 4, 5 ];
@@ -47,6 +51,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#promiseMapSeries', () => {
+    before(() => assert(typeof utils.promiseMapSeries === 'function', 'Expected promiseMapSeries to be a function'));
+
     it('should iterate through an array', async () => {
       const items = [ 1, 2, 3, 4, 5 ];
       const results = await utils.promiseMapSeries(items, async value => (value * value).toString());
@@ -55,6 +61,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#promiseReduceSeries', () => {
+    before(() => assert(typeof utils.promiseReduceSeries === 'function', 'Expected promiseReduceSeries to be a function'));
+
     it('should iterate through an array', async () => {
       const items = [ 1, 2, 3, 4, 5 ];
       const result = await utils.promiseReduceSeries(items, async (acc, value) => acc + value);
@@ -69,6 +77,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#promiseAllSettled', () => {
+    before(() => assert(typeof utils.promiseAllSettled === 'function', 'Expected promiseAllSettled to be a function'));
+
     it('should iterate through an array, returning all the values', async () => {
       const items = [ 1, 2, 3, 4, 5 ];
       const results = await utils.promiseAllSettled(items.map(async value => (value * value).toString()));
@@ -110,6 +120,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#createHashMd5', () => {
+    before(() => assert(typeof utils.createHashMd5 === 'function', 'Expected createHashMd5 to be a function'));
+
     it('should hash a string', async () => {
       const result = utils.createHashMd5('The Grid. A digital frontier.');
       assert.strictEqual(result, 'f1692f68b3c08a7d37be7eed8f7aff42');
@@ -119,7 +131,10 @@ describe('@someimportantcompany/utils', () => {
       assert.strictEqual(result, '5437e4c967b6353a44450a5889a4e061');
     });
   });
+
   describe('#createHashSha1', () => {
+    before(() => assert(typeof utils.createHashSha1 === 'function', 'Expected createHashSha1 to be a function'));
+
     it('should hash a string', async () => {
       const result = utils.createHashSha1('Flynn is teaching me about the art of the selfless.');
       assert.strictEqual(result, '355b4fe513bca423a4b3471cd0f8eff90b8529b0');
@@ -129,7 +144,10 @@ describe('@someimportantcompany/utils', () => {
       assert.strictEqual(result, 'a8515a30e8869d28ca309f31cb8f83d69d7023a1');
     });
   });
+
   describe('#createHashSha256', () => {
+    before(() => assert(typeof utils.createHashSha256 === 'function', 'Expected createHashSha256 to be a function'));
+
     it('should hash a string', async () => {
       const result = utils.createHashSha256('Your old man\'s about to knock on the sky and listen to the sound.');
       assert.strictEqual(result, '19e3df8b7f725efcc413cabb0de25d9311e751b603016754313678cf400a50a8');
@@ -141,6 +159,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#attempt', () => {
+    before(() => assert(typeof utils.attempt === 'function', 'Expected attempt to be a function'));
+
     it('should return a function value', async () => {
       const result = utils.attempt(() => true);
       assert.strictEqual(result, true);
@@ -173,6 +193,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#tryCatch', () => {
+    before(() => assert(typeof utils.tryCatch === 'function', 'Expected tryCatch to be a function'));
+
     it('should return a function value', async () => {
       const result = utils.tryCatch(() => true);
       assert.strictEqual(result, true);
@@ -205,6 +227,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#wait', () => {
+    before(() => assert(typeof utils.wait === 'function', 'Expected wait to be a function'));
+
     it('should wait for 100ms', async () => {
       await utils.wait(100);
     });
@@ -223,6 +247,11 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#aesEncrypt/#aesDecrypt', () => {
+    before(() => {
+      assert(typeof utils.aesEncrypt === 'function', 'Expected aesEncrypt to be a function');
+      assert(typeof utils.aesDecrypt === 'function', 'Expected aesDecrypt to be a function');
+    });
+
     const key = crypto.randomBytes(8).toString('hex');
 
     it('should encrypt & decrypt a string value', async () => {
@@ -271,6 +300,8 @@ describe('@someimportantcompany/utils', () => {
   });
 
   describe('#createAwsCloudwatchLogGroupUrl', () => {
+    before(() => assert(typeof utils.createAwsCloudwatchLogGroupUrl === 'function', 'Expected createAwsCloudwatchLogGroupUrl to be a function'));
+
     it('should return a CloudWatch Logs URL', () => {
       const result = utils.createAwsCloudwatchLogGroupUrl({
         groupName: '/aws/lambda/some-example-function',
